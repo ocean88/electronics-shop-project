@@ -8,11 +8,12 @@ if __name__ == '__main__':
     print(item2.calculate_total_price())  # 100000
 
     # устанавливаем новый уровень цен
-    Item.pay_rate = 0.8
+    Item.pay_rate = 0.85
     # применяем скидку
     item1.apply_discount()
-
-    print(item1.price)  # 8000.0
-    print(item2.price)  # 20000
-
+    item2.apply_discount()
+    print(item1.price)  # 8500.0
+    print(item2.price)  # 17000.0
+    Item.add_items(item1)
+    Item.add_items(item2)
     print(Item.all)  # [<__main__.Item object at 0x000001EC6250C690>, <__main__.Item object at 0x000001EC6250C6D0>]
