@@ -16,6 +16,7 @@ class Item:
         self.name = name
         self.price = price
         self.quantity = quantity
+        Item.all.append(self)
 
     def calculate_total_price(self) -> float:
         """
@@ -33,8 +34,3 @@ class Item:
         result = self.price * self.pay_rate
         self.price = round(result)
 
-    def add_items(self) -> None:
-        """
-        Добавляет экземпляр Item в список all.
-        """
-        Item.all.append(self)

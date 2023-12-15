@@ -14,6 +14,4 @@ if __name__ == '__main__':
     item2.apply_discount()
     print(item1.price)  # 8500.0
     print(item2.price)  # 17000.0
-    Item.add_items(item1)
-    Item.add_items(item2)
     print(Item.all)  # [<__main__.Item object at 0x000001EC6250C690>, <__main__.Item object at 0x000001EC6250C6D0>]
