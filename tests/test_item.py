@@ -19,3 +19,4 @@ def test_apply_discount() -> None:
     item.pay_rate = 0.8
     item.apply_discount()
     assert item.price == 400
+
