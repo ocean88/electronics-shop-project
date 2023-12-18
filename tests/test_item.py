@@ -4,7 +4,7 @@ from src.item import Item
 
 def test_item() -> None:
     item = Item("test", 10, 5)
-    assert item._name == "test"
+    assert item.name == "test"
     assert item.price == 10
     assert item.quantity == 5
 

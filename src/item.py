@@ -17,34 +17,35 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        self._name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
 
     @property
-    def cut_name(self):
-        return self._name
+    def name(self):
+        return self.__name
 
-    @cut_name.setter
-    def cut_name(self, name):
-        self._name = name
-        if len(self._name) > 10:
-            raise ValueError("Длина наименования товара превышает 10 символов.")
-        return self._name
+    @name.setter
+    def name(self, name):
+        self.__name = name
+        if len(self.__name) > 10:
+            return self.__name[:10]
+        return self.__name
 
     @classmethod
-    def instantiate_from_csv(cls, source_file: str) -> List:
+    def instantiate_from_csv(cls, source_file: str) -> List[str]:
         """
-       проверка на чтение файла
+        Чтение CSV файла и извлечение первой колонки name
         """
         try:
             with open(source_file, 'r') as file:
-                reader = csv.DictReader(file)
-                Item.all = [item for item in reader]
-                return Item.all
+                reader = csv.reader(file)
+                next(reader)  # Пропустить заголовок
+                Item.all = [row[0] for row in reader]
         except FileNotFoundError:
-            raise FileNotFoundError(f"CSV file '{source_file}' not found.")
+            raise FileNotFoundError(f"CSV file '{source_file}' не найден. Проверьте путь.")
+        return Item.all
 
     @staticmethod
     def string_to_number(string):
@@ -65,5 +66,3 @@ class Item:
         """
         result = self.price * self.pay_rate
         self.price = round(result)
-
-
