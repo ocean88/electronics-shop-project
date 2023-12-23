@@ -41,3 +41,13 @@ def test_cut_name() -> None:
     except ValueError as e:
         assert str(e) == "Длина наименования товара превышает 10 символов."
 
+
+def test_repr() -> None:
+    item = Item('Телефон', 10000, 5)
+    assert repr(item) == "Item('Телефон', 10000, 5)"
+
+
+def test_str() -> None:
+    item = Item('Телефон', 10000, 5)
+    assert str(item) == 'Телефон'
+
