@@ -51,3 +51,11 @@ def test_str() -> None:
     item = Item('Телефон', 10000, 5)
     assert str(item) == 'Телефон'
 
+
+def test_phone_add_item():
+    phone1 = Item("iPhone", 1000, 5)
+    phone2 = Item("Xiaomi", 50, 10)
+
+    result = phone1 + phone2
+
+    assert result == 15
