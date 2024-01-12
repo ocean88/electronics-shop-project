@@ -2,6 +2,38 @@ import csv
 from typing import List
 
 
+class ShellScriptError(Exception):
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Неизвестная ошибка скрипта'
+
+    def __str__(self):
+        return self.message
+
+
+class InstantiateCSVError(ShellScriptError):
+
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл item.csv поврежден'
+
+
+class ShellScript:
+
+    def __init__(self, source_file: str) -> None:
+        if not source_file:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+
+        with open(source_file, 'r') as file:
+            items = []
+            reader = csv.reader(file)
+            for row in reader:
+                if len(row) != 3:
+                    raise InstantiateCSVError("CSV файл должен содержать 3 столбца. Файл item.csv поврежден")
+                name = row[0]
+                items.append(name)
+
+        self.source_file = source_file
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -42,19 +74,17 @@ class Item:
             return self.__name[:10]
         return self.__name
 
-    @classmethod
-    def instantiate_from_csv(cls, source_file: str) -> List[str]:
-        """
-        Чтение CSV файла и извлечение первой колонки name
-        """
+    @staticmethod
+    def instantiate_from_csv(source_file: str) -> List[str]:
+        items = []
         try:
-            with open(source_file, 'r') as file:
-                reader = csv.reader(file)
-                next(reader)  # Пропустить заголовок
-                Item.all = [row[0] for row in reader]
+            ShellScript(source_file)
+            return items
         except FileNotFoundError:
-            raise FileNotFoundError(f"CSV file '{source_file}' не найден. Проверьте путь.")
-        return Item.all
+            print("Отсутствует файл item.csv")
+        except InstantiateCSVError:
+            print("Файл item.csv поврежден")
+
 
     @staticmethod
     def string_to_number(string):

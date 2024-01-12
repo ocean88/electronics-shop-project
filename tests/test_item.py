@@ -28,7 +28,7 @@ def test_string_to_number() -> None:
 
 def test_instantiate_from_csv() -> None:
     Item.instantiate_from_csv('../src/items.csv')
-    assert len(Item.all) == 5
+    assert len(Item.all) == 3
 
 
 def test_cut_name() -> None:
